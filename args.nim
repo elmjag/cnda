@@ -1,41 +1,59 @@
 import os
 import tables
+import strformat
+
 
 type
     Action* = enum
-        unknown, activate, create, remove
+        activate, create, remove, list
 
     Arguments = ref object
-        action*: Action
-        name*: string
+        case action*: Action
+        of activate, create, remove: name * : string
+        of list: discard
+
+#
+# module private types
+#
+type
+    ActionFormat = tuple[kind: Action, numArgs: int]
 
 
-
-const actionName = toTable[string, Action](
+const actionDescriptions = toTable[string, ActionFormat](
     {
-        "activate": Action.activate,
-        "create": Action.create,
-        "remove": Action.remove,
+        "activate": (Action.activate, 1),
+        "create": (Action.create, 1),
+        "remove": (Action.remove, 1),
+        "list": (Action.list, 0),
     })
 
 
 proc usage() =
-    echo "usage: TBD"
+    echo "usage: cnda <action> [options]"
     quit(1)
-
-
-proc getAction(arg: string): Action =
-    if not actionName.hasKey(arg):
-        return unknown
-
-    return actionName[arg]
 
 
 proc parseArgs*(): Arguments =
     let args = commandLineParams()
 
-    if args.len <= 1:
+    if args.len < 1:
         usage()
 
-    result = Arguments(action: getAction(args[0]),
-                       name: args[1])
+    let actionArg = args[0]
+
+    if not actionDescriptions.hasKey(actionArg):
+        echo &"unknown action '{actionArg}'"
+        quit(1)
+
+    let actionDesc = actionDescriptions[actionArg]
+
+    result = Arguments(action: actionDesc.kind)
+
+    if actionDesc.numArgs == 0:
+        return
+
+    if args.len < 2:
+        echo &"'{actionArg}' requires an argument"
+        quit(1)
+
+    result.name = args[1]
