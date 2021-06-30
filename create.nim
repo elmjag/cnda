@@ -1,8 +1,6 @@
 import strformat
 from os import fileExists, execShellCmd
-from streams import newFileStream
-from yaml/dom import loadDom
-from yaml/parser import YamlParserError
+from envs import getEnvironmentName, InvalidEnvironmentFile
 
 
 proc isCondaEnvironmentFile(filePath: string): bool =
@@ -12,9 +10,9 @@ proc isCondaEnvironmentFile(filePath: string): bool =
     try:
         # try to parse specified file to
         # check if it containes valid YAML
-        discard loadDom(newFileStream(filePath))
-    except YamlParserError:
-        echo &"ignoring '{filePath}', failed to parse as yaml"
+        discard getEnvironmentName(filePath)
+    except InvalidEnvironmentFile:
+        echo &"ignoring '{filePath}', failed to parse as conda environment file"
 
         return false
 
@@ -29,4 +27,4 @@ proc getCondaCommand(name: string): string =
 
 
 proc createEnvironment*(name: string) =
-    discard execShellCmd(get_conda_command(name))
+    discard execShellCmd(getCondaCommand(name))

@@ -1,15 +1,12 @@
 import strformat
 from args import parseArgs, Action
 from envs import get_envs
-from create import create_environment
+from create import createEnvironment
+from remove import removeEnvironment
 
 
 proc activate_environment(name: string) =
     echo &"activate {name}"
-
-
-proc remove_environment(name: string) =
-    echo &"remove {name}"
 
 
 proc listEnvironments() =
@@ -24,7 +21,7 @@ proc main() =
     of Action.activate:
         activate_environment(arguments.name)
     of Action.remove:
-        remove_environment(arguments.name)
+        removeEnvironment(arguments.name)
     of Action.create:
         createEnvironment(arguments.name)
     of Action.list:
