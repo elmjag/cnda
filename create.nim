@@ -1,5 +1,5 @@
 import strformat
-from os import fileExists, execShellCmd
+from os import fileExists
 from envs import getEnvironmentName, InvalidEnvironmentFile
 
 
@@ -27,4 +27,4 @@ proc getCondaCommand(name: string): string =
 
 
 proc createEnvironment*(name: string) =
-    discard execShellCmd(getCondaCommand(name))
+    echo getCondaCommand(name)

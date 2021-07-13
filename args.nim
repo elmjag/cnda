@@ -1,6 +1,6 @@
-import os
 import tables
 import strformat
+from os import commandLineParams
 
 
 type

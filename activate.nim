@@ -2,6 +2,6 @@ import strformat
 from envs import getEnvs, lookupEnvironmentName
 
 
-proc removeEnvironment*(name: string) =
+proc activateEnvironment*(name: string) =
     let envName = lookupEnvironmentName(name)
-    echo &"conda remove --name {envName} --all"
+    echo &"conda activate {envName}"

@@ -34,3 +34,28 @@ proc getEnvironmentName*(yamlFile: string): string =
         raise newException(InvalidEnvironmentFile, "yaml parse error")
     except KeyError:
         raise newException(InvalidEnvironmentFile, "'name' element not found")
+
+
+proc environmentExists*(envName: string): bool =
+    ##
+    ## returns true if environment with specified name exist
+    ##
+    for env in getEnvs():
+        if env == envName:
+            return true
+
+    false
+
+
+proc lookupEnvironmentName*(name: string): string =
+    ##
+    ## if 'name' specifies an existing environment, return 'name'
+    ## otherwise, assume 'name' is a conda environment yaml file,
+    ## and return environment name specified in that file
+    ##
+    if environmentExists(name):
+        return name
+
+    # TODO: check if file 'name' exists
+
+    return envs.getEnvironmentName(name)
