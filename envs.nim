@@ -28,12 +28,24 @@ proc getEnvironmentName*(yamlFile: string): string =
     ## get the name of the environment defined in file
     ##
     try:
-        let doc = loadDom(newFileStream(yaml_file))
-        return doc.root["name"].content
+        let root = loadDom(newFileStream(yaml_file)).root
+
+        if root.kind != yMapping:
+            raise newException(InvalidEnvironmentFile, "unexpected yaml structure")
+
+        return root["name"].content
     except YamlParserError:
         raise newException(InvalidEnvironmentFile, "yaml parse error")
     except KeyError:
         raise newException(InvalidEnvironmentFile, "'name' element not found")
+
+
+proc validEnvironmentFile*(filePath: string): bool =
+    try:
+        discard getEnvironmentName(filePath)
+        return true
+    except InvalidEnvironmentFile:
+        return false
 
 
 proc environmentExists*(envName: string): bool =
