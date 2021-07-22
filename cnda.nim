@@ -3,6 +3,7 @@ from envs import get_envs
 from activate import activateEnvironment
 from create import createEnvironment
 from remove import removeEnvironment
+from completions import echoCompletions
 
 
 proc listEnvironments() =
@@ -25,6 +26,8 @@ proc main() =
         createEnvironment(arguments.name)
     of Action.list:
         listEnvironments()
+    of Action.completions:
+        echoCompletions(arguments.previous, arguments.current)
 
 
 main()

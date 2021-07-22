@@ -1,3 +1,8 @@
+
+#/usr/bin/env bash
+
+complete -C /home/elmjag/cnda/cnda cnda
+
 cnda()
 {
     _cnda_out="$(/home/elmjag/cnda/cnda $@)"

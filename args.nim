@@ -1,15 +1,16 @@
 import tables
 import strformat
-from os import commandLineParams
+from os import commandLineParams, existsEnv
 
 
 type
     Action* = enum
-        activate, create, remove, list
+        activate, create, remove, list, completions
 
     Arguments = ref object
         case action*: Action
         of activate, create, remove: name * : string
+        of completions: previous*, current*: string
         of list: discard
 
 #
@@ -19,7 +20,7 @@ type
     ActionFormat = tuple[kind: Action, numArgs: int]
 
 
-const actionDescriptions = toTable[string, ActionFormat](
+const actionDescriptions* = toTable[string, ActionFormat](
     {
         "activate": (Action.activate, 1),
         "create": (Action.create, 1),
@@ -35,6 +36,10 @@ proc usage() =
 
 proc parseArgs*(): Arguments =
     let args = commandLineParams()
+
+    if existsEnv("COMP_LINE"):
+        # the 'bash completions' mode detected
+        return Arguments(action: completions, previous: args[2], current: args[1])
 
     if args.len < 1:
         usage()
