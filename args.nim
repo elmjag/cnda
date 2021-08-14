@@ -30,7 +30,16 @@ const actionDescriptions* = toTable[string, ActionFormat](
 
 
 proc usage() =
-    echo "usage: cnda <action> [options]"
+    echo("""usage: cnda <comand> <argument>
+
+The supported commands are:
+
+    activate <argument>   activate conda environment
+    create <argument>     create new conda environment
+    remove <argument>     remove conda environment
+
+The <argument> argument specifies the conda environment for the
+command. It can be environment's name or environment.yml file.""")
     quit(1)
 
 
@@ -45,6 +54,9 @@ proc parseArgs*(): Arguments =
         usage()
 
     let actionArg = args[0]
+
+    if actionArg == "--help" or actionArg == "-h":
+        usage()
 
     if not actionDescriptions.hasKey(actionArg):
         echo &"unknown action '{actionArg}'"
