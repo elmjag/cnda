@@ -25,6 +25,22 @@ If you have `make` tool installed, you can compile with:
 
     make
 
+## Installer
+
+The cnda installer is a self-extracting archive, with custom `setup` binary.
+Installation process is as follows:
+
+* installer binary extracts itself into a temp-directory
+* embedded `setup` binary is launched
+* `setup` binary performs the installation steps, see setup.nim
+
+The installer is build using the [mkarchive](https://github.com/destrangis/mkarchive) utility.
+To build installer:
+
+* create and activate conda environment defined in environment.yml
+* build installer with:
+
+    make installer
 
 ## Architecture
 

@@ -1,0 +1,16 @@
+#
+# environment for building the self-extracting installer
+#
+# NOTE: the 'libtar' devel package needs to installed as well.
+# On ubuntu install the 'libtar-dev' deb package.
+#
+name: cnda_installer
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9.6
+  - pip=21.2.4
+  - pip:
+    - mkarchive==0.5.2
+
+
