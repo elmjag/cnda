@@ -1,17 +1,8 @@
 from args import parseArgs, Action
-from envs import get_envs
 from activate import activateEnvironment
 from create import createEnvironment
 from remove import removeEnvironment
 from completions import echoCompletions
-
-
-proc listEnvironments() =
-    for envName in get_envs():
-        echo envName
-
-    # signal that environments list should be printed
-    quit(1)
 
 
 proc main() =
@@ -24,8 +15,6 @@ proc main() =
         removeEnvironment(arguments.name)
     of Action.create:
         createEnvironment(arguments.name)
-    of Action.list:
-        listEnvironments()
     of Action.completions:
         echoCompletions(arguments.previous, arguments.current)
 

@@ -5,13 +5,12 @@ from os import commandLineParams, existsEnv
 
 type
     Action* = enum
-        activate, create, remove, list, completions
+        activate, create, remove, completions
 
     Arguments = ref object
         case action*: Action
         of activate, create, remove: name * : string
         of completions: previous*, current*: string
-        of list: discard
 
 #
 # module private types
@@ -25,7 +24,6 @@ const actionDescriptions* = toTable[string, ActionFormat](
         "activate": (Action.activate, 1),
         "create": (Action.create, 1),
         "remove": (Action.remove, 1),
-        "list": (Action.list, 0),
     })
 
 
