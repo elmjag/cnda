@@ -1,5 +1,6 @@
 import strformat
-from os import commandLineParams, findExe, parentDir, joinPath, moveFile, createDir, expandTilde
+from os import commandLineParams, findExe, parentDir, joinPath, moveFile,
+        createDir, expandTilde
 from strutils import replace
 from tempfile import mkstemp
 

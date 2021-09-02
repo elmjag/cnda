@@ -14,6 +14,10 @@ Activate an environment from a file:
 
     cnda activate environment.yml
 
+Deactivate current environment:
+
+    cnda deactivate
+
 Create new environment:
 
     cnda create <myenv>
@@ -41,6 +45,10 @@ Remove environment defined in a file:
 
 Activate a conda environment.
 The environment to activate can be specified using it's name or by specifying the environment.yml file where it is defined.
+
+    cnda deactivate
+
+Deactivate current environment. If no environment is activated, no action is performed.
 
     cnda create <env-name> | <env-file>
 

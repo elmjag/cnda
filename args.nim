@@ -5,12 +5,13 @@ from os import commandLineParams, existsEnv
 
 type
     Action* = enum
-        activate, create, remove, completions
+        activate, deactivate, create, remove, completions
 
     Arguments = ref object
         case action*: Action
         of activate, create, remove: name * : string
         of completions: previous*, current*: string
+        of deactivate: discard
 
 #
 # module private types
@@ -24,15 +25,17 @@ const actionDescriptions* = toTable[string, ActionFormat](
         "activate": (Action.activate, 1),
         "create": (Action.create, 1),
         "remove": (Action.remove, 1),
+        "deactivate": (Action.deactivate, 0),
     })
 
 
 proc usage() =
-    echo("""usage: cnda <comand> <argument>
+    echo("""usage: cnda <comand> [<argument>]
 
 The supported commands are:
 
     activate <argument>   activate conda environment
+    deactivate            deactivate conda environment
     create <argument>     create new conda environment
     remove <argument>     remove conda environment
 

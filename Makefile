@@ -7,7 +7,7 @@ COMPILE_FLAGS =
 
 all: $(BIN)
 
-cnda: cnda.nim args.nim envs.nim activate.nim create.nim remove.nim completions.nim
+cnda: cnda.nim args.nim envs.nim misc.nim create.nim remove.nim completions.nim
 	nim compile $(COMPILE_FLAGS) cnda.nim
 
 setup: setup.nim
